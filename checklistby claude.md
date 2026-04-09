@@ -1,0 +1,1547 @@
+# 📅 Month 1 — Big Data Engineering Daily Checklist
+
+> **Goal:** Complete Python (remaining) + Big Data Fundamentals + Hadoop + HDFS + MapReduce + YARN
+> **Daily Time:** 2–3 hours
+> **Started:** Completed Python up to #25 Functions In Python + #58 What is Big Data (1 video)
+> **Python Practice:** Daily Days 1–14 → 3x/week Days 15–30
+> **SQL Practice:** On no-Python days throughout the month (2 questions/day)
+> **Tests:** Day 10, Day 20, Day 30 (mix of coding + theory)
+
+-----
+
+## 📌 How To Use This File
+
+- Check `[ ]` → `[x]` as you complete each item
+- Come here every day — Claude gives you the questions, you bring answers + code
+- Every 10 days = a test session before moving forward
+- **Python days** = 5 PQ + 5 HW (coding focused)
+- **No-Python days** = 5 PQ + 5 HW (theory) + 2 SQL questions
+- Push this file to GitHub and update it daily — that’s your streak tracker
+
+-----
+
+## 📊 Month 1 Progress Tracker
+
+|Week               |Python Focus                         |Big Data Focus  |SQL            |
+|-------------------|-------------------------------------|----------------|---------------|
+|Week 1 (Days 1–7)  |Functional + Modules + File I/O + OOP|—               |Days 2, 3      |
+|Week 2 (Days 8–14) |Decorators + NumPy + Pandas + Logging|Big Data Intro  |Days 12        |
+|Week 3 (Days 15–21)|3x/week                              |Hadoop + HDFS   |Days 15, 17, 19|
+|Week 4 (Days 22–30)|3x/week                              |MapReduce + YARN|Days 22, 24, 26|
+
+-----
+
+## 🗓️ SQL Schedule (No-Python Days)
+
+|Day   |SQL Topic                                      |
+|------|-----------------------------------------------|
+|Day 2 |SELECT, WHERE, ORDER BY, LIMIT                 |
+|Day 3 |GROUP BY, HAVING, aggregate functions          |
+|Day 12|JOINs — INNER, LEFT, RIGHT, FULL               |
+|Day 15|Subqueries + nested SELECT                     |
+|Day 17|CASE WHEN + NULL handling                      |
+|Day 19|Window functions — ROW_NUMBER, RANK, DENSE_RANK|
+|Day 22|CTEs (WITH clause)                             |
+|Day 24|String functions + Date functions              |
+|Day 26|Indexes + Query optimization basics            |
+|Day 28|SQL revision + mixed practice                  |
+
+-----
+
+-----
+
+# 🗓️ WEEK 1 — Python: Functional Programming + OOP Foundations
+
+-----
+
+## ✅ Day 1 — ✅ Videos Watched
+
+> **Theme:** Function Examples + Lambda + Map
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [x] #26 Python Function Examples (28min)
+- [x] #27 Lambda Functions In Python (10min)
+- [x] #28 Map Functions In Python (11min)
+
+**💡 Practice Questions (5)**
+
+- [X] **PQ1:** You have a function that takes `*args`. Write it so it returns the sum of all arguments. Now call it with 3 different combinations of inputs.
+- [X] **PQ2:** What is the difference between a regular function and a lambda? Write the same logic — “multiply two numbers” — as both. When would you NOT use a lambda?
+- [X] **PQ3:** You have this list: `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`. Use `map()` with a lambda to return a new list where every number is cubed.
+- [X] **PQ4:** You have a list of names: `["Alice", "Bob", "Charlie", "Dan", "Eve"]`. Use a lambda inside `sorted()` to sort them by the last character of each name.
+- [X] **PQ5:** What does this output and why?
+
+```python
+f = lambda x, y=10: x + y
+print(f(5))
+print(f(5, 20))
+```
+
+**📝 Homework (5)**
+
+- [X] **HW1:** Write a function `apply_operation(lst, func)` that takes a list and any function, applies that function to every element, and returns the new list. Test it with 3 different lambdas.
+- [X] **HW2:** You have a list of employee dicts:
+
+```python
+employees = [
+    {"name": "Ravi", "salary": 50000},
+    {"name": "Priya", "salary": 75000},
+    {"name": "Arjun", "salary": 30000},
+    {"name": "Sneha", "salary": 90000}
+]
+```
+
+Use `map()` + lambda to create a new list with a 10% salary raise for everyone.
+
+- [X] **HW3:** Write a function `pipeline(data, *funcs)` that takes a list and any number of functions, applies them one after another (output of one becomes input of next), and returns the final result. Test it by chaining 3 lambdas.
+- [X] **HW4:** Use `map()` to convert this list of Celsius temperatures to Fahrenheit. Formula: `F = (C × 9/5) + 32`
+
+```python
+celsius = [0, 20, 37, 100, -40]
+```
+
+- [X] **HW5 — 🔀 Mixed:** In MapReduce, the Map phase transforms each record independently — exactly like `map()` in Python. Write a Python simulation: given a list of sentences, use `map()` to split each sentence into words (the “map phase”). Then explain in 3 lines how this connects to what Hadoop’s Mapper does.
+
+**📓 My Notes & Code:**
+
+```python
+## PQ_day_1
+
+# PQ1: You have a function that takes *args. Write it so it returns the sum of all arguments. Now call it with 3 different combinations of inputs.
+def sum_list(*args):
+    s = 0
+    for i in args:
+        s+=i
+
+    return s
+
+sum_list(3,6,8)
+17
+# PQ2: What is the difference between a regular function and a lambda? Write the same logic — “multiply two numbers” — as both. When would you NOT use a lambda?
+
+# ans: the difference betwwen lambda and regular function is that the expressiono or the logic inside the function can only be one in lambda but in regular we can have multiple expressionn or logic inside a function , we will not use lambda when there will be multiple logics or expression that need to be calculated
+
+# def multiple(a,b):
+
+# return a*b
+
+# multiple = lambda x,y:x*y
+# PQ3: You have this list: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]. Use map() with a lambda to return a new list where every number is cubed.
+c=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+a=list(map(lambda x:x**3,c))
+print(a)
+[1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+ # PQ4: You have a list of names: ["Alice", "Bob", "Charlie", "Dan", "Eve"]. Use a lambda inside sorted() to sort them by the last character of each name.
+
+names = ["Alice", "Bob", "Charlie", "Dan", "Eve"]
+
+sorted_names = sorted(names, key=lambda x: x[-1])
+print(sorted_names)
+['Bob', 'Alice', 'Charlie', 'Eve', 'Dan']
+ # PQ5: What does this output and why?
+f = lambda x, y=10: x + y
+print(f(5))
+print(f(5, 20))
+
+# THE 1ST ONE TAKES 10 AS DEFAULT VALUE AND GIVE RESULT As 15 
+# the 2nd one has two values so it gave 25 that is 20 + 5
+15
+25
+
+
+
+📝 Homework (5)
+
+HW1: Write a function apply_operation(lst, func) that takes a list and any function, applies that function to every element, and returns the new list. Test it with 3 different lambdas.
+HW2: You have a list of employee dicts:
+employees = [
+    {"name": "Ravi", "salary": 50000},
+    {"name": "Priya", "salary": 75000},
+    {"name": "Arjun", "salary": 30000},
+    {"name": "Sneha", "salary": 90000}
+]
+Use map() + lambda to create a new list with a 10% salary raise for everyone.
+
+HW3: Write a function pipeline(data, *funcs) that takes a list and any number of functions, applies them one after another (output of one becomes input of next), and returns the final result. Test it by chaining 3 lambdas.
+HW4: Use map() to convert this list of Celsius temperatures to Fahrenheit. Formula: F = (C × 9/5) + 32
+celsius = [0, 20, 37, 100, -40]
+HW5 — 🔀 Mixed: In MapReduce, the Map phase transforms each record independently — exactly like map() in Python. Write a Python simulation: given a list of sentences, use map() to split each sentence into words (the “map phase”). Then explain in 3 lines how this connects to what Hadoop’s Mapper does.
+# HW1: Write a function apply_operation(lst, func) that takes a list and any function, applies that function to every element, and returns the new list. Test it with 3 different lambdas.
+a_1 = lambda a:a**2
+a_2 = lambda a:a**3
+a_3 = lambda a:a**4
+
+lst=[1,2,3]
+
+def apply_operation(lst, func):
+    return list(map(func,lst))
+
+apply_operation(lst,a_2)
+[1, 8, 27]
+# HW2: You have a list of employee dicts:
+# employees = [
+#     {"name": "Ravi", "salary": 50000},
+#     {"name": "Priya", "salary": 75000},
+#     {"name": "Arjun", "salary": 30000},
+#     {"name": "Sneha", "salary": 90000}
+# ]
+# Use map() + lambda to create a new list with a 10% salary raise for everyone.
+
+
+
+
+employees = [
+    {"name": "Ravi", "salary": 50000},
+    {"name": "Priya", "salary": 75000},
+    {"name": "Arjun", "salary": 30000},
+    {"name": "Sneha", "salary": 90000}
+]
+
+a=list(map(lambda x:x["salary"]*1.10,employees))
+print(a)
+[55000.00000000001, 82500.0, 33000.0, 99000.00000000001]
+# HW3: Write a function pipeline(data, *funcs) that takes a list and any number of functions, applies them one after another (output of one becomes input of next), and returns the final result. Test it by chaining 3 lambdas.
+a_1 = lambda a:a*a
+a_2 = lambda a:a*a*a
+a_3 = lambda a:a*a*a*a
+
+x=2
+
+
+def pipeline(data,*funcs):
+    a=data
+    for i in funcs: 
+        a=i(data)
+    return a 
+
+c=pipeline(x,a_1,a_2,a_3)
+print(c)
+16
+# W4: Use map() to convert this list of Celsius temperatures to Fahrenheit. Formula: F = (C × 9/5) + 32
+# celsius = [0, 20, 37, 100, -40]
+def fa(*c):
+    for i in c:
+        return i*(9/5)+32
+celsius = [0, 20, 37, 100, -40]
+
+f=list(map(fa,celsius))
+
+print(f)
+[32.0, 68.0, 98.60000000000001, 212.0, -40.0]
+# HW5 — 🔀 Mixed: In MapReduce, the Map phase transforms each record independently — exactly like map() in Python. Write a Python simulation: given a list of sentences, use map() to split each sentence into words (the “map phase”). Then explain in 3 lines how this connects to what Hadoop’s Mapper does.
+
+# see chat i dont have hadoop any knowledge also not about any thing so i cant answer this 
+```
+
+**⏱️ Time Spent:** `90` mins
+
+-----
+
+## ✅ Day 2
+
+> **Theme:** Filter + Modules + Standard Library
+> **🐍 Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #29 Python Filter Function (9min)
+- [ ] #30 Import Modules And Packages (17min)
+- [ ] #31 Standard Library Overview (18min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — SELECT, WHERE, ORDER BY, LIMIT**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & Code:**
+
+```python
+# Python code here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 3
+
+> **Theme:** File Operations + File Paths + Exception Handling
+> **🐍 Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #32 File Operation In Python (17min)
+- [ ] #33 Working With File Paths (9min)
+- [ ] #34 Exception Handling In Python (25min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — GROUP BY, HAVING, Aggregates**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & Code:**
+
+```python
+# Python code here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 4
+
+> **Theme:** OOP + Inheritance
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #35 OOPS In Python (23min)
+- [ ] #36 Inheritance In Python (19min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 5
+
+> **Theme:** Polymorphism + Encapsulation + Abstraction
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #37 Polymorphism In Python (19min)
+- [ ] #38 Encapsulation In Python (22min)
+- [ ] #39 Abstraction In Python (9min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 6
+
+> **Theme:** Magic Methods + Custom Exceptions + Operator Overloading
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #40 Magic Methods In Python (8min)
+- [ ] #41 Custom Exception In Python (7min)
+- [ ] #42 Operator Overloading In Python (9min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 7
+
+> **Theme:** Iterators + Generators + Week 1 Review
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #43 Iterators In Python (6min)
+- [ ] #44 Generators In Python (11min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+**🏁 Week 1 Self-Check**
+
+- [ ] Can I write a class with inheritance without help?
+- [ ] Can I use map / filter / lambda confidently?
+- [ ] Can I handle exceptions and file I/O cleanly?
+- [ ] Do I understand the difference between iterator and generator?
+- [ ] Can I write basic SQL SELECT, WHERE, GROUP BY, HAVING queries?
+
+-----
+
+-----
+
+# 🗓️ WEEK 2 — Python: Advanced + NumPy + Pandas + Logging
+
+-----
+
+## ✅ Day 8
+
+> **Theme:** Decorators + NumPy
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #45 Decorators In Python (21min)
+- [ ] #46 Working With Numpy In Python (28min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 9
+
+> **Theme:** Pandas DataFrame + Data Manipulation
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #47 Pandas DataFrame And Series (29min)
+- [ ] #48 Data Manipulation And Analysis (25min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 10 — 🧪 TEST DAY
+
+> **Theme:** Data Sources + SQLite + Logging + TEST
+> **🐍 Python today**
+
+**📹 Videos**
+
+- [ ] #49 Data Source Reading (15min)
+- [ ] #50 Python With SQLite (17min)
+- [ ] #51 Logging In Python (15min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+### 🧪 DAY 10 TEST — Python Foundations
+
+> Bring answers to Claude. No notes. 45 minutes max.
+
+**Theory (5)**
+
+- [ ] **T1:** What is the difference between `__str__` and `__repr__`? When does Python use each automatically?
+- [ ] **T2:** Explain lazy evaluation. Give one Python example and one Big Data example.
+- [ ] **T3:** What is the difference between an iterator and a generator? Which is more memory efficient and why?
+- [ ] **T4:** What does `@property` do? Why use it instead of a regular method?
+- [ ] **T5:** What is the difference between `try/except/else` and `try/except/finally`? When does the `else` block run?
+
+**Coding (5)**
+
+- [ ] **C1:** Write a `@retry(n)` decorator that retries a function `n` times on exception before finally raising
+- [ ] **C2:** Write a generator that yields only prime numbers up to N
+- [ ] **C3:** Create a class `Stack` with `push`, `pop`, `peek`, `is_empty` — implement `__len__` and `__str__`
+- [ ] **C4:** Use `map()` + `filter()` + `lambda` in one pipeline: from a list of numbers, keep only odds → square them → keep only those > 50
+- [ ] **C5:** Write a context manager class `FileHandler` using `__enter__` and `__exit__` that safely opens and closes a file and handles exceptions
+
+**🎯 Test Score:** `___/10`
+**📋 Feedback from Claude:** *(paste here after submitting)*
+
+-----
+
+## ✅ Day 11
+
+> **Theme:** Logging Deep Dive + Big Data Intro
+> **🐍 Python today (3x/week — Days 11, 13, 14)**
+
+**📹 Videos**
+
+- [ ] #52 Logging With Multiple Loggers (5min)
+- [ ] #53 Logging In a Real World Example (8min)
+- [ ] #54 Python Outro (1min)
+- [ ] #57 Big Data Section Intro (1min)
+- [ ] #58 What is Big Data - A Practical Example (18min) ✅ Already watched — review notes
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 12
+
+> **Theme:** 5 V’s of Big Data + Distributed Systems + Big Data System Design
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #59 5 V’s of Big Data (22min)
+- [ ] #60 Big Data and Distributed Systems (18min)
+- [ ] #61 Designing a Good Big Data System (11min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — JOINs**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+Big Data notes here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 13
+
+> **Theme:** On-Prem vs Cloud + DB vs DW vs Data Lake
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #62 On-Premise Infra vs Cloud Solutions (20min)
+- [ ] #63 Database vs Data Warehouse vs Data Lake (29min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 14
+
+> **Theme:** ETL vs ELT + Data Engineer Role + Hadoop Intro
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #64 ETL vs ELT (22min)
+- [ ] #65 What does a Data Engineer do & Where Big Data Fit in (18min)
+- [ ] #66 Hadoop Section Intro (3min)
+- [ ] #67 Introduction To Hadoop (6min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+**🏁 Week 2 Self-Check**
+
+- [ ] Can I write a decorator without help?
+- [ ] Can I do basic NumPy + Pandas operations from memory?
+- [ ] Can I explain the 5 V’s with real examples?
+- [ ] Do I understand ETL vs ELT and when to use each?
+- [ ] Can I write SQL JOINs confidently?
+
+-----
+
+-----
+
+# 🗓️ WEEK 3 — Hadoop + HDFS Deep Dive
+
+-----
+
+## ✅ Day 15
+
+> **Theme:** Hadoop Ecosystem + HDFS Intro
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #68 Properties of Hadoop (10min)
+- [ ] #69 Hadoop Ecosystem - Main Components (9min)
+- [ ] #70 Hadoop Ecosystem - Components (29min)
+- [ ] #71 Intro to HDFS and Common Terminology (23min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — Subqueries**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+Hadoop / HDFS notes here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 16
+
+> **Theme:** HDFS Architecture + Blocks + Replication Factor
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #72 Why HDFS (4min)
+- [ ] #73 HDFS Architecture (16min)
+- [ ] #74 Blocks In HDFS (12min)
+- [ ] #75 Replication Factor in HDFS (10min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 17
+
+> **Theme:** Rack Awareness + Node Failure + GCP Account
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #76 Rack Awareness in HDFS (8min)
+- [ ] #77 Node Failure (1min)
+- [ ] #78 Create GCP Account (24min)
+- [ ] #79 Data Node Failure - Temporary (12min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — CASE WHEN + NULL handling**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+HDFS notes / diagrams here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 18
+
+> **Theme:** Permanent Node Failure + NameNode HA Architecture
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #80 Data Node Failure - Permanent (14min)
+- [ ] #81 Secondary Name Node (17min)
+- [ ] #82 Standby Name Node (11min)
+- [ ] #83 Hadoop HA Architecture (20min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 19
+
+> **Theme:** HDFS Read/Write + GCP Cluster Creation
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #84 Data Write in HDFS (23min)
+- [ ] #85 Read Request in HDFS (11min)
+- [ ] #86 GCP Hadoop Cluster Creation (29min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — Window Functions**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+HDFS read/write sequence diagrams here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 20 — 🧪 TEST DAY
+
+> **Theme:** Exploring Cluster + GCP Best Practices + Linux Commands 1 + TEST
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #87 Exploring our Hadoop Cluster (24min)
+- [ ] #88 GCP Cluster Best Practices (4min)
+- [ ] #89 Linux Commands -1 (32min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+### 🧪 DAY 20 TEST — Big Data + HDFS + Python + SQL
+
+> Bring answers to Claude. No notes. 60 minutes max.
+
+**Theory (5)**
+
+- [ ] **T1:** What is the ACTUAL role of the Secondary NameNode? (Common trick question — be very precise)
+- [ ] **T2:** Walk me through the HDFS write process step by step — minimum 6 steps
+- [ ] **T3:** What are the 5 V’s of Big Data? Give a real-world example for each one
+- [ ] **T4:** What is the difference between ETL and ELT? When would a company choose ELT?
+- [ ] **T5:** What is rack awareness in HDFS and why does it exist?
+
+**Coding (5)**
+
+- [ ] **C1:** Write a Python class `HDFSSimulator` with methods `write_file(name, size_mb)`, `get_blocks(name)`, `get_replicas(block_id)` — simulate block splitting at 128MB with 3 replicas each
+- [ ] **C2:** Write a Python generator that reads a large file in chunks of N bytes and yields each chunk — never loads the full file into memory
+- [ ] **C3:** Write a decorator `@log_execution` that logs the function name, arguments passed, return value, and time taken — writes to a `.log` file
+- [ ] **C4:** Build a mini ETL in Python: read a CSV → filter rows where a numeric column > 100 → write cleaned output → log every single step with timestamps
+- [ ] **C5:** Write a function that takes a directory path and returns a dict of `{filename: size_in_kb}` for all files found recursively using `pathlib`
+
+**🗄️ SQL (2)**
+
+- [ ] **SQL1:** Write a query using a window function to rank employees by salary within each department
+- [ ] **SQL2:** Write a query to find all customers who placed more than 3 orders — use a subquery AND rewrite it using a CTE
+
+**🎯 Test Score:** `___/12`
+**📋 Feedback from Claude:** *(paste here after submitting)*
+
+-----
+
+## ✅ Day 21
+
+> **Theme:** Linux Commands 2 + HDFS Commands + Hadoop Outro
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #90 Linux Commands -2 (28min)
+- [ ] #91 HDFS Commands (30min)
+- [ ] #92 Hadoop Outro (2min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+**🏁 Week 3 Self-Check**
+
+- [ ] Can I explain HDFS architecture end-to-end from memory?
+- [ ] Do I understand Secondary NameNode vs Standby NameNode clearly?
+- [ ] Can I draw the HA architecture with all components?
+- [ ] Am I comfortable with basic Linux + HDFS commands?
+- [ ] Do I understand HDFS read/write flow step by step?
+- [ ] Can I write SQL window functions?
+
+-----
+
+-----
+
+# 🗓️ WEEK 4 — MapReduce + YARN + Final Review
+
+-----
+
+## ✅ Day 22
+
+> **Theme:** MapReduce Concepts + Distributed Processing
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #93 Map Reduce Intro (2min)
+- [ ] #94 Intro To Distributed Processing (12min)
+- [ ] #95 Map Reduce Introduction (17min)
+- [ ] #96 Map Reduce & Cluster (12min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — CTEs**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+MapReduce flow diagram here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 23
+
+> **Theme:** MapReduce Practicals 1 & 2
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #97 Map Reduce Practical Part 1 (17min)
+- [ ] #98 MR Example Part 2 (22min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 24
+
+> **Theme:** MR with 1 Reducer + 2 Reducers
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #99 MR Practical with 1 Reducer (40min)
+- [ ] #100 MR with 2 Reducer Practical (29min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — String + Date Functions**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+MR reducer diagrams here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 25
+
+> **Theme:** Combiner + Zero Reducer + Big Log File
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #101 Combiner in MR (13min)
+- [ ] #102 Map Reduce with 0 Reducer (16min)
+- [ ] #103 MR on Big Log File (21min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 26
+
+> **Theme:** Input Splits + YARN Introduction + Components
+> **🐍 No Python today | 🗄️ SQL today**
+
+**📹 Videos**
+
+- [ ] #104 Input Split in MR (7min)
+- [ ] #105 Map Reduce Outro (2min)
+- [ ] #106 YARN Section Intro (1min)
+- [ ] #107 YARN Introduction (6min)
+- [ ] #108 Components of YARN (22min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**🗄️ SQL Questions (2) — Query Optimization + Indexes**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Notes & SQL:**
+
+```
+YARN architecture diagram here
+```
+
+```sql
+-- SQL answers here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 27
+
+> **Theme:** YARN Analogy + YARN Process Step by Step
+> **🐍 Python today (3x/week)**
+
+**📹 Videos**
+
+- [ ] #109 YARN Analogy (6min)
+- [ ] #110 YARN Process Step by step (28min)
+
+**💡 Practice Questions (5)**
+
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
+
+**📝 Homework (5)**
+
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
+
+**📓 My Notes & Code:**
+
+```python
+# Paste your code here
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 28
+
+> **Theme:** Buffer / Catch-Up / Weak Areas
+> **🐍 Python today | 🗄️ SQL revision today**
+
+**📋 What to do today:**
+
+- [ ] Re-watch any video you rated below 3/5 from self-checks
+- [ ] Redo the hardest homework problem from any previous day
+- [ ] Write your Month 1 concept summary (one paragraph each)
+
+**🗄️ SQL Questions (2) — Mixed Revision**
+
+- [ ] **SQL1:** *(sent daily)*
+- [ ] **SQL2:** *(sent daily)*
+
+**📓 My Summary Notes:**
+
+```
+HDFS (in your own words):
+
+
+MapReduce (in your own words):
+
+
+YARN (in your own words):
+
+
+Python — what I'm most confident about:
+
+
+Python — what still needs work:
+
+
+SQL — what I'm most confident about:
+```
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 29
+
+> **Theme:** Month 1 Mini Project
+> **🐍 Full Python day**
+
+**🎯 Build This Project — Push to GitHub**
+
+A Python data pipeline with all of these:
+
+- [ ] Reads a CSV file using Pandas
+- [ ] Cleans the data (drop nulls, fix types, rename columns)
+- [ ] Transforms it (filter rows, group by, aggregate)
+- [ ] Writes output to a new CSV
+- [ ] Every stage decorated with `@timer` and `@retry(3)`
+- [ ] Full logging: each step logs to both console and a `.log` file
+- [ ] Built using a class `Pipeline` with proper OOP structure
+- [ ] Has a `README.md` explaining what the pipeline does
+
+**📓 GitHub Link:** `___`
+
+**⏱️ Time Spent:** `___` mins
+
+-----
+
+## ✅ Day 30 — 🧪 FINAL TEST DAY
+
+> **Theme:** Month 1 Graduation Test
+> Skim all your notes before starting. Then close everything.
+
+**📹 Quick Revision:**
+
+- [ ] Skim notes from Days 1–29
+- [ ] Review all diagrams you drew
+
+-----
+
+### 🧪 DAY 30 TEST — Full Month 1 Graduation
+
+> Bring all answers to Claude. No notes. 75 minutes max.
+> **Need 7/10 on coding+theory AND at least 1/2 on SQL to move to Month 2.**
+
+**Theory (5)**
+
+- [ ] **T1:** Explain the full YARN job submission process step by step — minimum 8 steps from client submit to task execution
+- [ ] **T2:** What is the difference between a Combiner and a Reducer? When should you NOT use a Combiner — give a specific example
+- [ ] **T3:** What is the difference between `repartition` and `coalesce` in Spark? (Research this — preview of Month 2)
+- [ ] **T4:** Walk me through what happens when a DataNode permanently fails — what does the NameNode do, step by step?
+- [ ] **T5:** What is the Medallion Architecture (Bronze/Silver/Gold)? Research and explain in your own words with an example
+
+**Coding (5)**
+
+- [ ] **C1:** Write a complete Python OOP-based ETL class: `extract()` reads CSV, `transform()` filters + renames columns, `load()` writes output — add `@timer` decorator to each method
+- [ ] **C2:** Write a generator function `log_reader(filepath)` that reads a log file line by line, yields only lines containing “ERROR”, and skips blank lines — memory efficient
+- [ ] **C3:** Implement a `PriorityQueue` class using Python’s `heapq` module with `push(priority, item)` and `pop()` methods — explain how this simulates a YARN job scheduler
+- [ ] **C4:** Write a function `simulate_mapreduce(text)` that performs: map phase (word → (word,1)), shuffle phase (group by word), reduce phase (sum counts) — return the final word count dict
+- [ ] **C5:** Write a Python script that finds all `.csv` files in a directory recursively, reads each with Pandas, combines them into one DataFrame, and saves to `combined_output.csv` with full logging
+
+**SQL (2)**
+
+- [ ] **SQL1:** You have `orders(order_id, customer_id, amount, order_date)`. Write a query that shows each customer’s total spend, number of orders, average order value, and their rank by total spend — all in one query
+- [ ] **SQL2:** Write a query to find customers who placed an order in January but NOT in February — use both a subquery approach and a LEFT JOIN approach
+
+**🎯 Test Score:** `___/12`
+**📋 Feedback from Claude:** *(paste here after submitting)*
+
+-----
+
+## 🏁 Month 1 Final Self-Assessment
+
+Rate yourself honestly 1–5:
+
+|Topic                              |Rating (1–5)|Need More Work?|
+|-----------------------------------|------------|---------------|
+|Lambda / Map / Filter / Reduce     |            |               |
+|File I/O + Exception Handling      |            |               |
+|OOP — Classes + Inheritance        |            |               |
+|OOP — Magic Methods + Encapsulation|            |               |
+|Iterators + Generators             |            |               |
+|Decorators                         |            |               |
+|NumPy + Pandas basics              |            |               |
+|Logging                            |            |               |
+|Big Data 5 V’s                     |            |               |
+|ETL vs ELT / DB vs DW vs Lake      |            |               |
+|Hadoop Ecosystem                   |            |               |
+|HDFS Architecture + Read/Write     |            |               |
+|NameNode HA                        |            |               |
+|MapReduce End-to-End               |            |               |
+|YARN Components + Job Flow         |            |               |
+|Linux + HDFS Commands              |            |               |
+|SQL — SELECT / WHERE / GROUP BY    |            |               |
+|SQL — JOINs                        |            |               |
+|SQL — Window Functions + CTEs      |            |               |
+
+**✅ Ready for Month 2 when:**
+
+- [ ] Day 30 test score ≥ 7/10 (coding + theory)
+- [ ] SQL questions attempted on all SQL days
+- [ ] Mini project pushed to GitHub with README
+- [ ] All 110 videos checked off
+- [ ] No topic rated below 3
+
+-----
+
+## 📚 Month 1 Resources
+
+|Resource               |Link                                                                                 |
+|-----------------------|-------------------------------------------------------------------------------------|
+|Python Docs            |https://docs.python.org/3/                                                           |
+|Hadoop Official Docs   |https://hadoop.apache.org/docs/                                                      |
+|HDFS Architecture Guide|https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-hdfs/HdfsDesign.html|
+|GCP Dataproc Docs      |https://cloud.google.com/dataproc/docs                                               |
+|NumPy Docs             |https://numpy.org/doc/                                                               |
+|Pandas Docs            |https://pandas.pydata.org/docs/                                                      |
+|LeetCode SQL 50        |https://leetcode.com/studyplan/top-sql-50/                                           |
+|SQLZoo Practice        |https://sqlzoo.net/                                                                  |
+|W3Schools SQL          |https://www.w3schools.com/sql/                                                       |
+
+-----
+
+*📌 Come back every day. Bring your code and answers. Claude gives questions, reviews work, and keeps you on track.*
+*🧪 Tests on Day 10, 20, 30 — no skipping.*
+*💪 Strong logic + daily consistency = you will crush this.*
