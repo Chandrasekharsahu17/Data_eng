@@ -238,6 +238,23 @@ print(f)
 **⏱️ Time Spent:** `90` mins
 
 -----
+📅 Day 2 Questions — Filter + Modules + Standard Library
+Watch: #29 Filter (9min), #30 Modules (17min), #31 Standard Library (18min)
+💡 PQ1: What does filter() return in Python 3 — a list or something else? Write a one-liner using filter() + lambda to keep only even numbers from [1,2,3,4,5,6,7,8,9,10].
+💡 PQ2: What is the difference between import math and from math import sqrt? When would you prefer one over the other?
+💡 PQ3: Use filter() to remove all empty strings from this list: ["hello", "", "world", "", "python", ""]
+💡 PQ4: What does random.choice(), random.shuffle(), and random.randint() do? Write one example using each.
+💡 PQ5: What is the difference between os.path.join() and just using string concatenation for file paths? Why does it matter?
+
+📝 HW1: Write a function filter_by_condition(lst, condition_func) that takes a list and any function, returns filtered results. Test it with 3 different lambdas — one for numbers, one for strings, one for dicts.
+📝 HW2: Using filter() + map() together in a pipeline: start with [1,2,3,4,5,6,7,8,9,10] → keep only odds → square them → return as list. Do this in one line.
+📝 HW3: Use the collections module — specifically Counter — to count word frequency in this sentence: "the cat sat on the mat the cat". Then use collections.defaultdict to group a list of words by their first letter.
+📝 HW4: Use the datetime module to: (a) print today’s date, (b) calculate how many days since January 1 2026, (c) add 30 days to today and print it.
+📝 HW5 — 🔀 Mixed: filter() in Python is like the filter step before a Reducer in MapReduce — it removes records you don’t need. Write a simulation: given a list of log lines, use filter() to keep only lines containing "ERROR". Then explain in 3 lines how this maps to what happens in a real Hadoop pipeline before the reduce
+ 🗄️ SQL1: You have a table employees(id, name, department, salary). Write a query to get all employees in the 'Engineering' department with salary > 60000, ordered by salary descending, limit to top 5.
+🗄️ SQL2: From the same table, write a query to find all employees whose name starts with 'A' OR who earn more than 90000. Use WHERE with both LIKE and OR.
+
+
 
 ## ✅ Day 2
 
