@@ -2,14 +2,13 @@
 
 > **Goal:** Complete Python (remaining) + Big Data Fundamentals + Hadoop + HDFS + MapReduce + YARN
 > **Daily Time:** 2–3 hours
-> **Started:** Completed Python up to #25 Functions In Python + #58 What is Big Data (1 video)
 > **Python Practice:** Daily Days 1–14 → 3x/week Days 15–30
-> **SQL Practice:** On no-Python days throughout the month (2 questions/day)
-> **Tests:** Day 10, Day 20, Day 30 (mix of coding + theory)
+> **SQL Practice:** On no-Python days (2 questions/day)
+> **Tests:** Day 10, Day 20, Day 30
 
 -----
 
-## 📊 Month 1 Progress Tracker
+## 📊 Progress Tracker
 
 |Week               |Python Focus                         |Big Data Focus  |SQL            |
 |-------------------|-------------------------------------|----------------|---------------|
@@ -41,7 +40,7 @@
 
 -----
 
-## ✅ Day 1 — Videos Watched ✅
+## ✅ Day 1 — DONE ✅
 
 > **Theme:** Function Examples + Lambda + Map
 > **🐍 Python today**
@@ -68,8 +67,7 @@
 - [x] **HW4:** Use map() to convert Celsius [0, 20, 37, 100, -40] to Fahrenheit. Formula: F = (C x 9/5) + 32.
 - [x] **HW5 — 🔀 Mixed:** Given a list of sentences, use map() to split each into words. Explain in 3 lines how this connects to Hadoop Mapper.
 
-**📓 Notes & Code:** See `notebooks/day_1/day_1.ipynb`
-
+**📓 Notebook:** `notebooks/day_1/day_1.ipynb`
 **⏱️ Time Spent:** `90` mins
 
 -----
@@ -106,8 +104,7 @@
 - [ ] **SQL1:** Table employees(id, name, department, salary). Get all in ‘Engineering’ with salary > 60000, ordered by salary DESC, top 5 only.
 - [ ] **SQL2:** Find employees whose name starts with ‘A’ OR who earn more than 90000. Use WHERE with LIKE and OR.
 
-**📓 Notes & Code:** See `notebooks/day_2/day_2.ipynb`
-
+**📓 Notebook:** `notebooks/day_2/day_2.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -125,27 +122,26 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What is the difference between open(file, ‘r’), ‘w’, ‘a’, and ‘rb’? When do you use each?
-- [ ] **PQ2:** What does `with open(...) as f` do? Why is it better than manually calling f.close()?
-- [ ] **PQ3:** What is the difference between pathlib.Path and os.path? Which is more modern?
-- [ ] **PQ4:** What is the purpose of try/except/finally? Write a skeleton showing all three blocks.
-- [ ] **PQ5:** When would you use `except ValueError` instead of `except Exception`? Why is catching all exceptions bad practice?
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Write a word frequency counter: read any .txt file, count each word, write top 10 most frequent to a new file.
-- [ ] **HW2:** Write a safe file reader that handles FileNotFoundError and PermissionError separately with clear different messages.
-- [ ] **HW3:** Use pathlib to: check if path exists, get filename without extension, get parent directory, list all .csv files recursively.
-- [ ] **HW4:** Script that reads a file line by line — if any line causes error, log the line number and error to errors.log and continue.
-- [ ] **HW5 — 🔀 Mixed:** Write safe_write(filepath, data) that writes data, reads it back to verify, raises custom WriteVerificationError if content doesn’t match.
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
 **🗄️ SQL Questions (2) — GROUP BY, HAVING, Aggregates**
 
-- [ ] **SQL1:** Table orders(order_id, customer_id, amount, city). Find cities where total order amount exceeds 10000, ordered by total DESC.
-- [ ] **SQL2:** What is the difference between WHERE and HAVING? Fix this broken query: `SELECT department, COUNT(*) FROM employees HAVING COUNT(*) > 5 WHERE salary > 50000`
+- [ ] SQL1:
+- [ ] SQL2:
 
-**📓 Notes & Code:** See `notebooks/day_3/day_3.ipynb`
-
+**📓 Notebook:** `notebooks/day_3/day_3.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -162,22 +158,21 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What are the 4 pillars of OOP? Define each in one sentence.
-- [ ] **PQ2:** What is self in a Python class? Why do you always pass it as the first argument?
-- [ ] **PQ3:** What is the difference between a class attribute and an instance attribute? Show with code.
-- [ ] **PQ4:** What does super() do in inheritance? When and why do you use it?
-- [ ] **PQ5:** What is MRO (Method Resolution Order)? What does Python do when two parent classes have the same method?
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Create BankAccount class with deposit(), withdraw(), get_balance(). Prevent negative balance with custom InsufficientFundsError.
-- [ ] **HW2:** Create SavingsAccount that inherits BankAccount and adds interest_rate and apply_interest() method.
-- [ ] **HW3:** Create DataPipeline base class with extract(), transform(), load(). Create CSVPipeline and JSONPipeline subclasses.
-- [ ] **HW4:** Demonstrate MRO with diamond inheritance: A→B, A→C, B+C→D. Show which method gets called and why.
-- [ ] **HW5 — 🔀 Mixed:** Model a Big Data cluster with OOP: Cluster, Node, NameNode(Node), DataNode(Node). Cluster has add_node(), get_active_nodes(), simulate_failure(node_id).
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_4/day_4.ipynb`
-
+**📓 Notebook:** `notebooks/day_4/day_4.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -195,22 +190,21 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What is polymorphism? Give a real example with two classes that have the same method name but different behaviour.
-- [ ] **PQ2:** What is the difference between _single_underscore and __double_underscore in Python? What does name mangling do?
-- [ ] **PQ3:** How does @property work? Write a class where setting an attribute validates the value.
-- [ ] **PQ4:** What is the difference between an abstract class and a regular class? What happens if you instantiate an abstract class?
-- [ ] **PQ5:** What does ABC from the abc module do? Write a minimal example.
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Build Shape hierarchy: abstract base with area(). Implement Circle, Rectangle, Triangle. Call area() on a mixed list.
-- [ ] **HW2:** Create DataRecord class with @property for age (must be 0-150) and email (must contain @). Raise ValueError on invalid input.
-- [ ] **HW3:** Write a Singleton pattern for DatabaseConnection — only one instance should ever exist no matter how many times called.
-- [ ] **HW4:** Create abstract Connector class with connect(), query(sql), close(). Implement SQLConnector and a fake HDFSConnector.
-- [ ] **HW5 — 🔀 Mixed:** Why is encapsulation critical in distributed systems? Write ClusterConfig class that hides internal connection details.
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_5/day_5.ipynb`
-
+**📓 Notebook:** `notebooks/day_5/day_5.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -228,22 +222,21 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** Name 5 dunder/magic methods and what each controls. Which one is called when you do len(obj)?
-- [ ] **PQ2:** What is the difference between **str** and **repr**? When does Python use each automatically?
-- [ ] **PQ3:** How do you create a custom exception? Why create one instead of using ValueError?
-- [ ] **PQ4:** Which arithmetic operators can be overloaded in Python? What method name does + map to?
-- [ ] **PQ5:** What do **enter** and **exit** do? What Python statement uses them?
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Build Matrix class that supports +, -, * (element-wise) via operator overloading. Implement **str** to print it nicely.
-- [ ] **HW2:** Create context manager class Timer using **enter** and **exit** that prints how long a code block took.
-- [ ] **HW3:** Create custom exception hierarchy: PipelineError as base, then ExtractionError, TransformationError, LoadError as children.
-- [ ] **HW4:** Implement **len**, **getitem**, **contains** on a custom DataSet class wrapping a list.
-- [ ] **HW5 — 🔀 Mixed:** Implement a mini DataFrame class supporting df[‘column’] (getitem), len(df) (len), and str(df) (str) for a dict of columns.
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_6/day_6.ipynb`
-
+**📓 Notebook:** `notebooks/day_6/day_6.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -260,22 +253,21 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What are the two methods that make an object an iterator? Write a class-based iterator for even numbers.
-- [ ] **PQ2:** What is the difference between return and yield? What type does a generator function return?
-- [ ] **PQ3:** What is lazy evaluation? Why does it save memory compared to returning a full list?
-- [ ] **PQ4:** What does yield from do? How is it different from a regular yield?
-- [ ] **PQ5:** What happens when a generator is exhausted? What error do you get if you call next() on it?
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Write a generator that yields Fibonacci numbers up to N — never stores the full sequence in memory.
-- [ ] **HW2:** Compare memory: list of 10 million numbers vs a generator. Use sys.getsizeof to show the difference.
-- [ ] **HW3:** Build a data pipeline using only generators: read_lines(file) → filter_empty(lines) → parse_csv(lines). Chain them.
-- [ ] **HW4:** Write an infinite counter generator counter(start, step) that yields numbers forever.
-- [ ] **HW5 — 🔀 Mixed:** Simulate Spark lazy evaluation: LazyPipeline class where .map() and .filter() only execute when .collect() is called.
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_7/day_7.ipynb`
-
+**📓 Notebook:** `notebooks/day_7/day_7.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 **🏁 Week 1 Self-Check**
@@ -304,22 +296,21 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What is a decorator and what problem does it solve? Why use functools.wraps inside one?
-- [ ] **PQ2:** What is the difference between a decorator with arguments and one without? Show the structure of each.
-- [ ] **PQ3:** What is a NumPy array? How is it different from a Python list? Name 3 advantages.
-- [ ] **PQ4:** What is broadcasting in NumPy? Show an example adding a scalar to an array and two different-shaped arrays.
-- [ ] **PQ5:** What is the difference between np.dot() and element-wise * multiplication?
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Write @timer decorator that prints the function name and how long it took to run.
-- [ ] **HW2:** Write @retry(n) decorator that retries the function up to n times on exception, then re-raises.
-- [ ] **HW3:** Write @validate_args decorator that checks all arguments are positive numbers — raises ValueError if not.
-- [ ] **HW4:** Create a 5x5 NumPy matrix of random integers. Compute: transpose, row sums, column means, index of max value.
-- [ ] **HW5 — 🔀 Mixed:** Generate two arrays of 1M random floats, multiply element-wise using NumPy, compare timing vs Python loop.
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_8/day_8.ipynb`
-
+**📓 Notebook:** `notebooks/day_8/day_8.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -350,8 +341,7 @@
 - [ ] HW4:
 - [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_9/day_9.ipynb`
-
+**📓 Notebook:** `notebooks/day_9/day_9.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -359,7 +349,6 @@
 ## ✅ Day 10 — 🧪 TEST DAY
 
 > **Theme:** Data Sources + SQLite + Logging + TEST
-> **🐍 Python today**
 
 **📹 Videos**
 
@@ -383,32 +372,13 @@
 - [ ] HW4:
 - [ ] HW5:
 
-**📓 Notes & Code:** See `notebooks/day_10/day_10.ipynb`
-
-**⏱️ Time Spent:** `___` mins
-
-### 🧪 DAY 10 TEST — Python Foundations
-
-> No notes. 45 minutes max.
-
-**Theory (5)**
-
-- [ ] **T1:** What is the difference between **str** and **repr**? When does Python use each automatically?
-- [ ] **T2:** Explain lazy evaluation. Give one Python example and one Big Data example.
-- [ ] **T3:** What is the difference between an iterator and a generator? Which is more memory efficient and why?
-- [ ] **T4:** What does @property do? Why use it instead of a regular method?
-- [ ] **T5:** What is the difference between try/except/else and try/except/finally? When does the else block run?
-
-**Coding (5)**
-
-- [ ] **C1:** Write a @retry(n) decorator that retries a function n times on exception before finally raising
-- [ ] **C2:** Write a generator that yields only prime numbers up to N
-- [ ] **C3:** Create a class Stack with push, pop, peek, is_empty — implement **len** and **str**
-- [ ] **C4:** Use map() + filter() + lambda in one pipeline: from a list of numbers, keep only odds → square them → keep only those > 50
-- [ ] **C5:** Write a context manager class FileHandler using **enter** and **exit** that safely opens and closes a file
+**🧪 TEST — Questions will be given on Day 10**
 
 **🎯 Test Score:** `___/10`
 **📋 Feedback:** *(paste here)*
+
+**📓 Notebook:** `notebooks/day_10/day_10.ipynb`
+**⏱️ Time Spent:** `___` mins
 
 -----
 
@@ -474,8 +444,8 @@
 
 **🗄️ SQL Questions (2) — JOINs**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -585,8 +555,8 @@
 
 **🗄️ SQL Questions (2) — Subqueries**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -654,8 +624,8 @@
 
 **🗄️ SQL Questions (2) — CASE WHEN + NULL handling**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -722,8 +692,8 @@
 
 **🗄️ SQL Questions (2) — Window Functions**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -739,28 +709,23 @@
 - [ ] #88 GCP Cluster Best Practices (4min)
 - [ ] #89 Linux Commands -1 (32min)
 
-### 🧪 DAY 20 TEST
+**💡 Practice Questions (5)**
 
-**Theory (5)**
+- [ ] PQ1:
+- [ ] PQ2:
+- [ ] PQ3:
+- [ ] PQ4:
+- [ ] PQ5:
 
-- [ ] **T1:** What is the ACTUAL role of the Secondary NameNode?
-- [ ] **T2:** Walk through the HDFS write process step by step — minimum 6 steps
-- [ ] **T3:** What are the 5 V’s of Big Data? Give a real-world example for each
-- [ ] **T4:** What is the difference between ETL and ELT? When would a company choose ELT?
-- [ ] **T5:** What is rack awareness in HDFS and why does it exist?
+**📝 Homework (5)**
 
-**Coding (5)**
+- [ ] HW1:
+- [ ] HW2:
+- [ ] HW3:
+- [ ] HW4:
+- [ ] HW5:
 
-- [ ] **C1:** Write Python class HDFSSimulator with write_file(name, size_mb), get_blocks(name), get_replicas(block_id)
-- [ ] **C2:** Write a Python generator that reads a large file in chunks of N bytes and yields each chunk
-- [ ] **C3:** Write a decorator @log_execution that logs function name, arguments, return value, and time taken to a .log file
-- [ ] **C4:** Build a mini ETL: read CSV → filter rows where numeric column > 100 → write cleaned output → log every step
-- [ ] **C5:** Write a function that takes a directory path and returns {filename: size_in_kb} for all files recursively using pathlib
-
-**🗄️ SQL (2)**
-
-- [ ] **SQL1:** Write a query using a window function to rank employees by salary within each department
-- [ ] **SQL2:** Find all customers who placed more than 3 orders — use a subquery AND rewrite using a CTE
+**🧪 TEST — Questions will be given on Day 20**
 
 **🎯 Test Score:** `___/12`
 **📋 Feedback:** *(paste here)*
@@ -843,8 +808,8 @@
 
 **🗄️ SQL Questions (2) — CTEs**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -908,8 +873,8 @@
 
 **🗄️ SQL Questions (2) — String + Date Functions**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -977,8 +942,8 @@
 
 **🗄️ SQL Questions (2) — Query Optimization + Indexes**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -1025,8 +990,8 @@
 
 **🗄️ SQL Questions (2) — Mixed Revision**
 
-- [ ] **SQL1:** *(sent daily)*
-- [ ] **SQL2:** *(sent daily)*
+- [ ] SQL1:
+- [ ] SQL2:
 
 **⏱️ Time Spent:** `___` mins
 
@@ -1037,49 +1002,23 @@
 > **Theme:** Month 1 Mini Project
 > **🐍 Full Python day**
 
-Build a Python data pipeline that:
-
 - [ ] Reads a CSV file using Pandas
 - [ ] Cleans the data (drop nulls, fix types, rename columns)
 - [ ] Transforms it (filter rows, group by, aggregate)
 - [ ] Writes output to a new CSV
 - [ ] Every stage decorated with @timer and @retry(3)
-- [ ] Full logging: each step logs to both console and a .log file
+- [ ] Full logging to both console and a .log file
 - [ ] Built using a class Pipeline with proper OOP structure
-- [ ] Has a README.md explaining what the pipeline does
+- [ ] Has a README.md
 
 **📓 GitHub Link:** `___`
-
 **⏱️ Time Spent:** `___` mins
 
 -----
 
 ## ✅ Day 30 — 🧪 FINAL TEST DAY
 
-### 🧪 DAY 30 TEST — Full Month 1 Graduation
-
-> No notes. 75 minutes max. Need 7/10 to move to Month 2.
-
-**Theory (5)**
-
-- [ ] **T1:** Explain the full YARN job submission process step by step — minimum 8 steps
-- [ ] **T2:** What is the difference between a Combiner and a Reducer? When should you NOT use a Combiner?
-- [ ] **T3:** What is the difference between repartition and coalesce in Spark?
-- [ ] **T4:** Walk through what happens when a DataNode permanently fails — what does the NameNode do step by step?
-- [ ] **T5:** What is the Medallion Architecture (Bronze/Silver/Gold)? Explain with an example.
-
-**Coding (5)**
-
-- [ ] **C1:** Write a complete Python OOP-based ETL class: extract() reads CSV, transform() filters + renames, load() writes output — add @timer to each method
-- [ ] **C2:** Write a generator function log_reader(filepath) that reads a log file line by line, yields only ERROR lines, skips blank lines
-- [ ] **C3:** Implement PriorityQueue class using heapq with push(priority, item) and pop() — explain how this simulates YARN job scheduler
-- [ ] **C4:** Write simulate_mapreduce(text): map phase (word → (word,1)), shuffle phase (group by word), reduce phase (sum counts)
-- [ ] **C5:** Write a script that finds all .csv files recursively, reads each with Pandas, combines into one DataFrame, saves to combined_output.csv with full logging
-
-**SQL (2)**
-
-- [ ] **SQL1:** orders(order_id, customer_id, amount, order_date). Show each customer’s total spend, number of orders, average order value, and rank by total spend — all in one query
-- [ ] **SQL2:** Find customers who placed an order in January but NOT in February — use both subquery and LEFT JOIN approaches
+**🧪 TEST — Questions will be given on Day 30**
 
 **🎯 Test Score:** `___/12`
 **📋 Feedback:** *(paste here)*
@@ -1120,6 +1059,6 @@ Build a Python data pipeline that:
 
 -----
 
-*📌 Come back every day. Bring your code. Claude reviews and keeps you on track.*
+*📌 Come back every day. Bring your notebook. I review, score, and give you the next day.*
 *🧪 Tests on Day 10, 20, 30 — no skipping.*
-*💪 Strong logic + daily consistency = you will crush this.*
+*💪 You’ve got this — Day 1 done, 29 to go!*
