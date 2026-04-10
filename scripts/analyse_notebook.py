@@ -29,7 +29,7 @@ PASS_SCORE_PCT    = 70
 TEST_DAYS         = {10, 20, 30}
 
 # ✅ FIXED: Using correct Claude model name
-CLAUDE_MODEL      = "claude-3-5-sonnet-20241022"
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-3-haiku-20240307")
 
 DAILY_QUESTIONS = {
     1: {
@@ -250,7 +250,7 @@ def extract_content(nb_path: str) -> dict:
                     if cur.startswith(pfx):
                         num = int(cur[len(pfx):])
                         cleaned = src.strip()
-                        if cleaned and len(cleaned) > 15:
+                        if cleaned and len(cleaned) > 5:
                             content[store][num] = cleaned
                         break
 
@@ -277,7 +277,7 @@ def call_claude(prompt: str) -> str:
     payload = json.dumps({
         "model": CLAUDE_MODEL,
         "max_tokens": 400,
-        "messages": [{"role": "user", "content": prompt}]
+        "messages": [     {         "role": "user",         "content": [             {"type": "text", "text": prompt}         ]     } ]
     }).encode()
     
     req = urllib.request.Request(
@@ -291,17 +291,27 @@ def call_claude(prompt: str) -> str:
         method="POST"
     )
     
+    for attempt in range(2):
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            response = json.loads(r.read().decode('utf-8'))
-            return response["content"][0]["text"]
+            response = json.loads(r.read().decode("utf-8"))
+
+            content = response.get("content", [])
+            texts = [c.get("text", "") for c in content if c.get("type") == "text"]
+
+            return "\n".join(texts).strip()
+
     except urllib.error.HTTPError as e:
-        error_body = e.read().decode('utf-8') if e.fp else ""
-        print(f"  ⚠️  Claude API HTTP Error {e.code}: {error_body[:200]}")
-        return f'{{"score": 0, "feedback": "API error: {str(e)[:50]}"}}'
+        error_body = e.read().decode("utf-8") if e.fp else ""
+        print(f"\n❌ Claude HTTP {e.code}")
+        print(error_body[:300])
+
     except Exception as e:
-        print(f"  ⚠️  Claude API Error: {str(e)[:100]}")
-        return f'{{"score": 0, "feedback": "API error: {str(e)[:50]}"}}'
+        print(f"\n❌ Claude Error: {str(e)}")
+
+    time.sleep(2)
+
+return '{"score": 0, "feedback": "API failed after retry"}'
 
 def score_one(question: str, answer: str, qtype: str) -> dict:
     """Score a single answer."""
@@ -319,7 +329,7 @@ Reply ONLY as JSON, no other text: {{"score": X, "feedback": "one sentence"}}"""
     resp = call_claude(prompt)
     try:
         # ✅ FIXED: Better JSON parsing
-        r = json.loads(re.sub(r"`json|`", "", resp).strip())
+        cleaned = re.sub(r"```json|```", "", resp).strip() r = json.loads(cleaned)
         return {
             "score": int(r.get("score", 0)),
             "max": 2,
