@@ -1,1 +1,76 @@
+name: Daily Notebook Analyser
+
+on:
+  push:
+    paths:
+      - 'notebooks/**/*.ipynb'
+  workflow_dispatch:
+    inputs:
+      day_number:
+        description: 'Day number to analyse (e.g. 1)'
+        required: true
+        default: '1'
+  schedule:
+    - cron: '0 17 * * *'    # 10:30 PM IST = 17:00 UTC (videos + PQ check)
+    - cron: '30 11 * * *'   # 5:00 PM IST = 11:30 UTC (HW check)
+    - cron: '30 4 * * 6'    # Saturday 10 AM IST = 04:30 UTC
+    - cron: '30 4 * * 0'    # Sunday 10 AM IST = 04:30 UTC
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic nbformat
+
+      - name: Get day number
+        id: get_day
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "day=${{ github.event.inputs.day_number }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "push" ]; then
+            # Extract day number from changed notebook path
+            CHANGED=$(git diff --name-only HEAD~1 HEAD | grep '.ipynb' | head -1)
+            DAY=$(echo $CHANGED | grep -oP '(?<=day_)\d+' | head -1)
+            echo "day=${DAY:-1}" >> $GITHUB_OUTPUT
+          else
+            # Scheduled run — use latest day
+            LATEST=$(ls notebooks/ 2>/dev/null | grep 'day_' | sort -t_ -k2 -n | tail -1 | grep -oP '\d+')
+            echo "day=${LATEST:-1}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run deadline reminder (scheduled only)
+        if: github.event_name == 'schedule'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/deadline_reminder.py
+
+      - name: Analyse notebook
+        if: github.event_name != 'schedule'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python scripts/analyse_notebook.py ${{ steps.get_day.outputs.day }}
+
+      - name: Commit updated checklist
+        run: |
+          git config user.name "Study-Bot"
+          git config user.email "study-bot@auto.com"
+          git add "checklistby claude .md"
+          git diff --staged --quiet || git commit -m "🤖 Day ${{ steps.get_day.outputs.day }} auto-update"
+          git push
 
