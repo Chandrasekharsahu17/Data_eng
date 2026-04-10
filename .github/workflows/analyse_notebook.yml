@@ -63,7 +63,17 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Scheduled — reminders + auto-scoring at 5 PM
+      - name: Scheduled — reminders + scoring
+        if: github.event_name == 'schedule'   
+        env: ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}    
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+        GITHUB_REPOSITORY: ${{ github.repository }} 
+        GMAIL_USER: ${{ secrets.GMAIL_USER }}  
+        GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}     
+        NOTIFY_EMAIL: sahuchandrasekhar4@gmail.com 
+        run: |     
+          python scripts/deadline_reminder.py    
+          python scripts/analyse_notebook.py
         if: github.event_name == 'schedule'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
