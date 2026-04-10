@@ -1,5 +1,4 @@
-## 
-“””
+## “””
 analyse_notebook.py  (v3)
 
 Triggered by schedule at 5 PM IST (11:30 UTC) OR workflow_dispatch.
@@ -11,8 +10,7 @@ Logic:
 1. PASS gate: score >= 70% AND all HW questions answered
 1. If PASS  → tick checklist + create next day notebook + email + GitHub Issue
 1. If FAIL  → email failure report + GitHub Issue (no next day created)
-
-“””
+   “””
 
 import json
 import os
