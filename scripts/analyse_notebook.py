@@ -270,8 +270,8 @@ def count_hw(day: int, content: dict) -> tuple:
 
 def call_claude(prompt: str) -> str:
     def call_claude(prompt: str) -> str:
-    print("API KEY LENGTH:", len(ANTHROPIC_API_KEY))
-    print("MODEL USED:", CLAUDE_MODEL)
+        print("API KEY LENGTH:", len(ANTHROPIC_API_KEY))
+        print("MODEL USED:", CLAUDE_MODEL)
     """Call Claude API to score an answer."""
     if not ANTHROPIC_API_KEY:
         return '{"score": 1, "feedback": "API key not set"}'
@@ -604,7 +604,6 @@ def main():
     print(f"\n{'='*54}")
     print(f"  Done — Day {day} — {pct}% — {'PASSED ✅' if passed else 'NOT PASSED ❌'}")
     print(f"{'='*54}\n")
-    print("API KEY LENGTH:", len(ANTHROPIC_API_KEY))
-    print("API KEY PRESENT:", bool(ANTHROPIC_API_KEY))
+
 if __name__ == "__main__":
     main()
