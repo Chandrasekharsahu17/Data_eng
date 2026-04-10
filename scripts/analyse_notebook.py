@@ -269,6 +269,9 @@ def count_hw(day: int, content: dict) -> tuple:
 # ── Claude Scorer ──────────────────────────────────────────────────────────
 
 def call_claude(prompt: str) -> str:
+    def call_claude(prompt: str) -> str:
+    print("API KEY LENGTH:", len(ANTHROPIC_API_KEY))
+    print("MODEL USED:", CLAUDE_MODEL)
     """Call Claude API to score an answer."""
     if not ANTHROPIC_API_KEY:
         return '{"score": 1, "feedback": "API key not set"}'
@@ -302,9 +305,14 @@ def call_claude(prompt: str) -> str:
                 return "\n".join(texts).strip()
 
         except urllib.error.HTTPError as e:
+            
             error_body = e.read().decode("utf-8") if e.fp else ""
-            print(f"\n❌ Claude HTTP {e.code}")
-            print(error_body[:300])
+
+            print("\n================ CLAUDE ERROR ================")
+            print("STATUS CODE:", e.code)
+            print("RESPONSE BODY:")
+            print(error_body)
+            print("=============================================\n")
 
         except Exception as e:
             print(f"\n❌ Claude Error: {str(e)}")
