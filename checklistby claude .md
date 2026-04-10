@@ -263,9 +263,9 @@ print(f)
 
 **📹 Videos**
 
-- [ ] #29 Python Filter Function (9min)
-- [ ] #30 Import Modules And Packages (17min)
-- [ ] #31 Standard Library Overview (18min)
+- [x] #29 Python Filter Function (9min)
+- [x] #30 Import Modules And Packages (17min)
+- [x] #31 Standard Library Overview (18min)
 
 **💡 Practice Questions (5)**
 
