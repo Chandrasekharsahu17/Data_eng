@@ -265,7 +265,7 @@ def count_hw(day: int, content: dict) -> tuple:
     answered = sum(1 for i in range(1, total + 1)
                    if len(content["hw_answers"].get(i, "").strip()) > 20)
     return answered, total
-
+print("API KEY PRESENT:", bool(ANTHROPIC_API_KEY))
 # ── Claude Scorer ──────────────────────────────────────────────────────────
 
 def call_claude(prompt: str) -> str:
