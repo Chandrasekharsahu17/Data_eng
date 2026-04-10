@@ -1,0 +1,98 @@
+name: Daily Notebook Analyser
+
+on:
+  # Push just saves the notebook — scoring happens at 5 PM IST automatically
+  push:
+    paths:
+      - 'notebooks/**/*.ipynb'
+
+  # Manual trigger — score immediately
+  workflow_dispatch:
+    inputs:
+      day_number:
+        description: 'Day number to score (e.g. 2)'
+        required: true
+        default: '1'
+
+  # Scheduled (UTC)
+  schedule:
+    - cron: '0 17 * * 1-5'    # 10:30 PM IST weekdays — video/PQ reminder
+    - cron: '30 11 * * 1-5'   # 5:00  PM IST weekdays — HW check + scoring
+    - cron: '30 4  * * 6'     # 10:00 AM IST Saturday — weekend reminder
+    - cron: '30 4  * * 0'     # 10:00 AM IST Sunday   — rest day reminder
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+
+  # ─── On PUSH: just acknowledge, no scoring ────────────────────────────────
+  confirm_push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Post acknowledgement issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | grep '\.ipynb' | head -1 || echo "")
+          DAY=$(echo "$CHANGED" | grep -oP '(?<=day_)\d+' | head -1 || echo "?")
+          curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
+            -d "{
+              \"title\": \"📥 Day $DAY notebook received — scoring at 5 PM IST\",
+              \"body\": \"## Notebook Saved ✅\\n\\nDay $DAY notebook is in your repo.\\n\\n**Automatic scoring runs at 5 PM IST.**\\n\\nYou can still edit and re-push before then.\\n\\n> To score immediately: Actions → Daily Notebook Analyser → Run workflow → enter day $DAY\",
+              \"labels\": [\"received\"]
+            }"
+
+  # ─── On SCHEDULE or MANUAL: reminders + scoring ───────────────────────────
+  run_scheduled_or_manual:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Scheduled — reminders + auto-scoring at 5 PM
+        if: github.event_name == 'schedule'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          NOTIFY_EMAIL: sahuchandrasekhar4@gmail.com
+        run: python scripts/deadline_reminder.py
+
+      - name: Manual — score specific day
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          NOTIFY_EMAIL: sahuchandrasekhar4@gmail.com
+        run: python scripts/analyse_notebook.py ${{ github.event.inputs.day_number }}
+
+      - name: Commit changes back to repo
+        run: |
+          git config user.name "Study-Bot"
+          git config user.email "study-bot@auto.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "🤖 Auto-update — score + next day notebook"
+          git push
