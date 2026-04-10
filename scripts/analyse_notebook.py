@@ -1,5 +1,5 @@
 """
-analyse_notebook.py  (v4 - DEBUGGED)
+analyse_notebook.py (v5 - FULLY FIXED)
 
 Triggered by schedule at 5 PM IST (11:30 UTC) OR workflow_dispatch.
 
@@ -15,8 +15,10 @@ import json
 import os
 import re
 import sys
+import time
 from pathlib import Path
 import urllib.request
+import urllib.error
 
 CHECKLIST_PATH    = "Month1_Final_Checklist.md"
 NOTEBOOKS_DIR     = "notebooks"
@@ -25,6 +27,9 @@ GITHUB_TOKEN      = os.environ.get("GITHUB_TOKEN", "")
 GITHUB_REPO       = os.environ.get("GITHUB_REPOSITORY", "")
 PASS_SCORE_PCT    = 70
 TEST_DAYS         = {10, 20, 30}
+
+# ✅ FIXED: Using correct Claude model name
+CLAUDE_MODEL      = "claude-3-5-sonnet-20241022"
 
 DAILY_QUESTIONS = {
     1: {
@@ -199,7 +204,7 @@ def get_latest_day() -> int:
                 pass
     return max_day
 
-# ── Notebook Parser ────────────────────────────────────────────────────────
+# ── Notebook Parser ───────────────────────────────────────���────────────────
 
 def extract_content(nb_path: str) -> dict:
     """Extract answers from Jupyter notebook."""
@@ -268,21 +273,34 @@ def call_claude(prompt: str) -> str:
     if not ANTHROPIC_API_KEY:
         return '{"score": 1, "feedback": "API key not set"}'
     
+    # ✅ FIXED: Using correct API structure and model name
     payload = json.dumps({
-        "model": "claude-sonnet-4-20250514",
+        "model": CLAUDE_MODEL,
         "max_tokens": 400,
         "messages": [{"role": "user", "content": prompt}]
     }).encode()
     
     req = urllib.request.Request(
-        "https://api.anthropic.com/v1/messages", data=payload,
-        headers={"Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01"},
+        "https://api.anthropic.com/v1/messages",
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01"
+        },
         method="POST"
     )
+    
     try:
         with urllib.request.urlopen(req, timeout=30) as r:
-            return json.loads(r.read())["content"][0]["text"]
+            response = json.loads(r.read().decode('utf-8'))
+            return response["content"][0]["text"]
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode('utf-8') if e.fp else ""
+        print(f"  ⚠️  Claude API HTTP Error {e.code}: {error_body[:200]}")
+        return f'{{"score": 0, "feedback": "API error: {str(e)[:50]}"}}'
     except Exception as e:
+        print(f"  ⚠️  Claude API Error: {str(e)[:100]}")
         return f'{{"score": 0, "feedback": "API error: {str(e)[:50]}"}}'
 
 def score_one(question: str, answer: str, qtype: str) -> dict:
@@ -300,10 +318,17 @@ Reply ONLY as JSON, no other text: {{"score": X, "feedback": "one sentence"}}"""
     
     resp = call_claude(prompt)
     try:
+        # ✅ FIXED: Better JSON parsing
         r = json.loads(re.sub(r"`json|`", "", resp).strip())
-        return {"score": int(r.get("score", 0)), "max": 2, "feedback": r.get("feedback", "")}
-    except Exception:
-        return {"score": 0, "max": 2, "feedback": f"Parse error: {resp[:50]}"}
+        return {
+            "score": int(r.get("score", 0)),
+            "max": 2,
+            "feedback": r.get("feedback", "")[:100]  # Limit feedback length
+        }
+    except json.JSONDecodeError:
+        return {"score": 0, "max": 2, "feedback": f"Parse error"}
+    except Exception as e:
+        return {"score": 0, "max": 2, "feedback": f"Scoring error"}
 
 def score_all(day: int, content: dict) -> dict:
     """Score all PQ, HW, SQL for a day."""
@@ -330,7 +355,7 @@ def score_all(day: int, content: dict) -> dict:
     
     return scores
 
-# ── Checklist Updater ───��──────────────────────────────────────────────────
+# ── Checklist Updater ──────────────────────────────────────────────────────
 
 def tick_checklist(day: int, scores: dict, content: dict):
     """Update checklist with scores."""
