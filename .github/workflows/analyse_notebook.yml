@@ -48,11 +48,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
-            -d "{
-              \"title\": \"📥 Day $DAY notebook received — scoring at 5 PM IST\",
-              \"body\": \"## Notebook Saved ✅\\n\\nDay $DAY notebook is in your repo.\\n\\n**Automatic scoring runs at 5 PM IST.**\\n\\nYou can still edit and re-push before then.\\n\\n> To score immediately: Actions → Daily Notebook Analyser → Run workflow → enter day $DAY\",
-              \"labels\": [\"received\"]
-            }"
+            -d "{\"title\": \"📥 Day $DAY notebook received — scoring at 5 PM IST\", \"body\": \"## Notebook Saved ✅\n\nDay $DAY notebook is in your repo.\n\n**Automatic scoring runs at 5 PM IST.**\n\nYou can still edit and re-push before then.\n\n> To score manually: Go to Actions tab and trigger 'Daily Notebook Analyser' workflow with day $DAY\", \"labels\": [\"received\"]}"
 
   # ─── On SCHEDULE or MANUAL: reminders + scoring ───────────────────────────
   run_scheduled_or_manual:
