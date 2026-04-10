@@ -292,24 +292,24 @@ def call_claude(prompt: str) -> str:
     )
     
     for attempt in range(2):
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            response = json.loads(r.read().decode("utf-8"))
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                response = json.loads(r.read().decode("utf-8"))
 
-            content = response.get("content", [])
-            texts = [c.get("text", "") for c in content if c.get("type") == "text"]
+                content = response.get("content", [])
+                texts = [c.get("text", "") for c in content if c.get("type") == "text"]
 
-            return "\n".join(texts).strip()
+                return "\n".join(texts).strip()
 
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode("utf-8") if e.fp else ""
-        print(f"\n❌ Claude HTTP {e.code}")
-        print(error_body[:300])
+        except urllib.error.HTTPError as e:
+            error_body = e.read().decode("utf-8") if e.fp else ""
+            print(f"\n❌ Claude HTTP {e.code}")
+            print(error_body[:300])
 
-    except Exception as e:
-        print(f"\n❌ Claude Error: {str(e)}")
+        except Exception as e:
+            print(f"\n❌ Claude Error: {str(e)}")
 
-    time.sleep(2)
+        time.sleep(2)
 
 return '{"score": 0, "feedback": "API failed after retry"}'
 
