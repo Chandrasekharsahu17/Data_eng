@@ -329,7 +329,8 @@ Reply ONLY as JSON, no other text: {{"score": X, "feedback": "one sentence"}}"""
     resp = call_claude(prompt)
     try:
         # ✅ FIXED: Better JSON parsing
-        cleaned = re.sub(r"```json|```", "", resp).strip() r = json.loads(cleaned)
+        cleaned = re.sub(r"```json|```", "", resp).strip()
+        r = json.loads(cleaned)
         return {
             "score": int(r.get("score", 0)),
             "max": 2,
