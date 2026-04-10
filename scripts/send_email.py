@@ -1,92 +1,88 @@
-## “””
-send_email.py
+"""
+send_email.py (v4 - DEBUGGED)
 
 Sends email via Gmail SMTP using an App Password.
 
 Required GitHub Secrets:
 GMAIL_USER     — your Gmail address (e.g. sahuchandrasekhar4@gmail.com)
 GMAIL_APP_PASS — 16-char App Password from myaccount.google.com/apppasswords
-NOTIFY_EMAIL   — recipient email (sahuchandrasekhar4@gmail.com)
-“””
+NOTIFY_EMAIL   — recipient email
+"""
 
 import os
 import smtplib
+import re
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-GMAIL_USER  = os.environ.get(“GMAIL_USER”, “”)
-GMAIL_PASS  = os.environ.get(“GMAIL_APP_PASS”, “”)
-NOTIFY_TO   = os.environ.get(“NOTIFY_EMAIL”, “sahuchandrasekhar4@gmail.com”)
+GMAIL_USER  = os.environ.get("GMAIL_USER", "")
+GMAIL_PASS  = os.environ.get("GMAIL_APP_PASS", "")
+NOTIFY_TO   = os.environ.get("NOTIFY_EMAIL", "sahuchandrasekhar4@gmail.com")
 
-def send_email(subject: str, body_html: str, body_text: str = “”) -> bool:
-“””
-Send an email via Gmail SMTP.
-Returns True on success, False on failure.
-“””
-if not GMAIL_USER or not GMAIL_PASS:
-print(f”  ⚠️  Gmail credentials not set — skipping email”)
-print(f”  Subject: {subject}”)
-return False
+def send_email(subject: str, body_html: str, body_text: str = "") -> bool:
+    """
+    Send an email via Gmail SMTP.
+    Returns True on success, False on failure.
+    """
+    if not GMAIL_USER or not GMAIL_PASS:
+        print(f"  ⚠️  Gmail credentials not set — skipping email")
+        print(f"  Subject: {subject}")
+        return False
 
-```
-msg = MIMEMultipart("alternative")
-msg["Subject"] = subject
-msg["From"]    = f"Study Bot <{GMAIL_USER}>"
-msg["To"]      = NOTIFY_TO
+    msg = MIMEMultipart("alternative")
+    msg["Subject"] = subject
+    msg["From"]    = f"Study Bot <{GMAIL_USER}>"
+    msg["To"]      = NOTIFY_TO
 
-# Plain text fallback
-if not body_text:
-    # Strip basic HTML tags for plain text version
-    import re
-    body_text = re.sub(r"<[^>]+>", "", body_html)
-    body_text = body_text.replace("&nbsp;", " ").strip()
+    # Plain text fallback
+    if not body_text:
+        body_text = re.sub(r"<[^>]+>", "", body_html)
+        body_text = body_text.replace("&nbsp;", " ").strip()
 
-msg.attach(MIMEText(body_text, "plain"))
-msg.attach(MIMEText(body_html, "html"))
+    msg.attach(MIMEText(body_text, "plain"))
+    msg.attach(MIMEText(body_html, "html"))
 
-try:
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(GMAIL_USER, GMAIL_PASS)
-        server.sendmail(GMAIL_USER, NOTIFY_TO, msg.as_string())
-    print(f"  ✅ Email sent: {subject}")
-    return True
-except Exception as e:
-    print(f"  ❌ Email failed: {e}")
-    return False
-```
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(GMAIL_USER, GMAIL_PASS)
+            server.sendmail(GMAIL_USER, NOTIFY_TO, msg.as_string())
+        print(f"  ✅ Email sent: {subject}")
+        return True
+    except Exception as e:
+        print(f"  ❌ Email failed: {e}")
+        return False
 
 def email_day_result(day: int, scores: dict, content: dict, passed: bool, next_day_created: bool):
-“”“Send Day X result email with score + next day info.”””
-pct = round((scores[“total”] / scores[“max_total”]) * 100) if scores[“max_total”] > 0 else 0
-next_day = day + 1
+    """Send Day X result email with score + next day info."""
+    pct = round((scores["total"] / scores["max_total"]) * 100) if scores["max_total"] > 0 else 0
+    next_day = day + 1
 
-```
-status_color  = "#22c55e" if passed else "#ef4444"
-status_text   = "PASSED ✅" if passed else "NOT PASSED ❌"
-grade_emoji   = "🏆" if pct >= 80 else "👍" if pct >= 70 else "⚠️"
+    status_color  = "#22c55e" if passed else "#ef4444"
+    status_text   = "PASSED ✅" if passed else "NOT PASSED ❌"
+    grade_emoji   = "🏆" if pct >= 80 else "👍" if pct >= 70 else "⚠️"
 
-# Build per-question rows
-def rows(section_dict, label):
-    html = ""
-    for i, s in section_dict.items():
-        e = "✅" if s["score"] == 2 else "⚠️" if s["score"] == 1 else "❌"
-        html += f"<tr><td style='padding:4px 8px'>{e} {label}{i}</td><td style='padding:4px 8px;text-align:center'><b>{s['score']}/2</b></td><td style='padding:4px 8px;color:#555'>{s['feedback']}</td></tr>"
-    return html
+    # Build per-question rows
+    def rows(section_dict, label):
+        html = ""
+        for i, s in section_dict.items():
+            e = "✅" if s["score"] == 2 else "⚠️" if s["score"] == 1 else "❌"
+            html += f"<tr><td style='padding:4px 8px'>{e} {label}{i}</td><td style='padding:4px 8px;text-align:center'><b>{s['score']}/2</b></td><td style='padding:4px 8px;color:#555'>{s['feedback']}</td></tr>"
+        return html
 
-pq_rows  = rows(scores["pq"],  "PQ")
-hw_rows  = rows(scores["hw"],  "HW")
-sql_rows = rows(scores["sql"], "SQL") if scores["sql"] else ""
+    pq_rows  = rows(scores["pq"],  "PQ")
+    hw_rows  = rows(scores["hw"],  "HW")
+    sql_rows = rows(scores["sql"], "SQL") if scores["sql"] else ""
 
-sql_section = f"""
+    sql_section = f"""
 <h3 style='color:#6366f1'>🗄️ SQL</h3>
 <table style='border-collapse:collapse;width:100%'>
   <tr style='background:#f1f5f9'><th style='padding:4px 8px;text-align:left'>Question</th><th style='padding:4px 8px'>Score</th><th style='padding:4px 8px;text-align:left'>Feedback</th></tr>
   {sql_rows}
 </table>""" if sql_rows else ""
 
-next_day_block = ""
-if passed and next_day_created:
-    next_day_block = f"""
+    next_day_block = ""
+    if passed and next_day_created:
+        next_day_block = f"""
 <div style='background:#f0fdf4;border-left:4px solid #22c55e;padding:12px 16px;margin-top:16px;border-radius:4px'>
   <b>🎉 Day {next_day} notebook is ready in your repo!</b><br>
   Open <code>notebooks/day_{next_day}/day_{next_day}.ipynb</code> and start today.
@@ -95,8 +91,8 @@ if passed and next_day_created:
   Videos + PQ → tonight by <b>10:30 PM</b><br>
   HW → tomorrow by <b>5:00 PM</b>
 </div>"""
-elif not passed:
-    next_day_block = f"""
+    elif not passed:
+        next_day_block = f"""
 <div style='background:#fef2f2;border-left:4px solid #ef4444;padding:12px 16px;margin-top:16px;border-radius:4px'>
   <b>❌ Day {next_day} is locked.</b><br>
   You need ≥70% AND all HW answered to unlock it.<br><br>
@@ -108,13 +104,9 @@ elif not passed:
   </ol>
 </div>"""
 
-time_row = f"<tr><td>⏱️ Time Spent</td><td><b>{content.get('time_spent', '—')} mins</b></td></tr>" if content.get("time_spent") else ""
+    time_row = f"<tr><td>⏱️ Time Spent</td><td><b>{content.get('time_spent', '—')} mins</b></td></tr>" if content.get("time_spent") else ""
 
-body_html = f"""
-```
-
-<!DOCTYPE html>
-
+    body_html = f"""<!DOCTYPE html>
 <html>
 <body style='font-family:sans-serif;max-width:640px;margin:0 auto;color:#1e293b'>
   <div style='background:#1e293b;color:white;padding:20px 24px;border-radius:8px 8px 0 0'>
@@ -124,7 +116,6 @@ body_html = f"""
 
   <div style='padding:20px 24px;border:1px solid #e2e8f0;border-top:none'>
 
-```
 <table style='width:100%;margin-bottom:16px'>
   <tr><td>📊 Score</td><td><b style='font-size:1.2em'>{scores["total"]}/{scores["max_total"]} ({pct}%)</b></td></tr>
   <tr><td>🏁 Status</td><td><b style='color:{status_color}'>{status_text}</b></td></tr>
@@ -146,7 +137,6 @@ body_html = f"""
 
 {sql_section}
 {next_day_block}
-```
 
   </div>
 
@@ -156,18 +146,13 @@ body_html = f"""
 </body>
 </html>"""
 
-```
-subject = f"{'✅' if passed else '❌'} Day {day} — {scores['total']}/{scores['max_total']} ({pct}%) | {'Day ' + str(next_day) + ' ready!' if passed else 'Fix and re-push'}"
-send_email(subject, body_html)
-```
+    subject = f"{'✅' if passed else '❌'} Day {day} — {scores['total']}/{scores['max_total']} ({pct}%) | {'Day ' + str(next_day) + ' ready!' if passed else 'Fix and re-push'}"
+    send_email(subject, body_html)
 
-def email_reminder(subject: str, heading: str, body_points: list, color: str = “#3b82f6”):
-“”“Send a generic reminder email.”””
-items_html = “”.join(f”<li style='margin:6px 0'>{p}</li>” for p in body_points)
-body_html = f”””
-
-<!DOCTYPE html>
-
+def email_reminder(subject: str, heading: str, body_points: list, color: str = "#3b82f6"):
+    """Send a generic reminder email."""
+    items_html = "".join(f"<li style='margin:6px 0'>{p}</li>" for p in body_points)
+    body_html = f"""<!DOCTYPE html>
 <html>
 <body style='font-family:sans-serif;max-width:640px;margin:0 auto;color:#1e293b'>
   <div style='background:{color};color:white;padding:20px 24px;border-radius:8px 8px 0 0'>
@@ -186,11 +171,8 @@ body_html = f”””
     send_email(subject, body_html)
 
 def email_test_warning(test_day: int, prev_day: int):
-“”“Send test day advance warning.”””
-body_html = f”””
-
-<!DOCTYPE html>
-
+    """Send test day advance warning."""
+    body_html = f"""<!DOCTYPE html>
 <html>
 <body style='font-family:sans-serif;max-width:640px;margin:0 auto;color:#1e293b'>
   <div style='background:#7c3aed;color:white;padding:20px 24px;border-radius:8px 8px 0 0'>
