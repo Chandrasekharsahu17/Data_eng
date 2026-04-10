@@ -43,7 +43,6 @@
 ## ✅ Day 1 — DONE ✅
 
 > **Theme:** Function Examples + Lambda + Map
-> **🐍 Python today**
 
 **📹 Videos**
 
@@ -51,61 +50,48 @@
 - [x] #27 Lambda Functions In Python (10min)
 - [x] #28 Map Functions In Python (11min)
 
-**💡 Practice Questions (5)**
-
-- [x] **PQ1:** Write a function using *args that returns the sum of all arguments. Call it with 3 different input combinations.
-- [x] **PQ2:** What is the difference between a regular function and a lambda? Write multiply two numbers as both. When would you NOT use a lambda?
-- [x] **PQ3:** Use map() with a lambda to cube every number in [1,2,3,4,5,6,7,8,9,10].
-- [x] **PQ4:** Sort [Alice, Bob, Charlie, Dan, Eve] by the last character of each name using a lambda inside sorted().
-- [x] **PQ5:** What does this output and why? `f = lambda x, y=10: x + y` → `print(f(5))` → `print(f(5, 20))`
-
-**📝 Homework (5)**
-
-- [x] **HW1:** Write apply_operation(lst, func) that applies any function to every element. Test with 3 different lambdas.
-- [x] **HW2:** Use map() + lambda to give every employee a 10% salary raise — return full updated dicts.
-- [x] **HW3:** Write pipeline(data, *funcs) that chains functions — output of one becomes input of next. Test with 3 lambdas.
-- [x] **HW4:** Use map() to convert Celsius [0, 20, 37, 100, -40] to Fahrenheit. Formula: F = (C x 9/5) + 32.
-- [x] **HW5 — 🔀 Mixed:** Given a list of sentences, use map() to split each into words. Explain in 3 lines how this connects to Hadoop Mapper.
+**💡 Practice Questions** — [x] All 5 done
+**📝 Homework** — [x] All 5 done
 
 **📓 Notebook:** `notebooks/day_1/day_1.ipynb`
 **⏱️ Time Spent:** `90` mins
 
 -----
 
-## ✅ Day 2
+## ✅ Day 2 — DONE ✅
 
 > **Theme:** Filter + Modules + Standard Library
-> **🐍 Python today | 🗄️ SQL today**
+> **Score: 37/60**
 
 **📹 Videos**
 
-- [ ] #29 Python Filter Function (9min)
-- [ ] #30 Import Modules And Packages (17min)
-- [ ] #31 Standard Library Overview (18min)
+- [x] #29 Python Filter Function (9min)
+- [x] #30 Import Modules And Packages (17min)
+- [x] #31 Standard Library Overview (18min)
 
 **💡 Practice Questions (5)**
 
-- [ ] **PQ1:** What does filter() return in Python 3? Write a one-liner using filter() + lambda to keep only even numbers from [1..10].
-- [ ] **PQ2:** What is the difference between `import math` and `from math import sqrt`? When would you prefer one over the other?
-- [ ] **PQ3:** Use filter() to remove all empty strings from: `["hello", "", "world", "", "python", ""]`
-- [ ] **PQ4:** What does random.choice(), random.shuffle(), and random.randint() do? Write one example using each.
-- [ ] **PQ5:** What is the difference between os.path.join() and string concatenation for file paths? Why does it matter?
+- [x] PQ1 `[5/5]` — filter() returns filter object, converted with list() correctly
+- [x] PQ2 `[3/5]` — correct concept, missed “when to prefer each”
+- [x] PQ3 `[4/5]` — works, tip: filter(None, lst) is cleaner
+- [x] PQ4 `[5/5]` — correct definitions and examples
+- [ ] PQ5 `[0/5]` — not answered, revisit: os.path.join() is cross-platform safe
 
 **📝 Homework (5)**
 
-- [ ] **HW1:** Write filter_by_condition(lst, condition_func) — test with 3 lambdas: one for numbers, one for strings, one for dicts.
-- [ ] **HW2:** filter() + map() pipeline in one line: [1..10] keep only odds → square them → return as list.
-- [ ] **HW3:** Use collections.Counter to count word frequency in: “the cat sat on the mat the cat”. Then defaultdict to group words by first letter.
-- [ ] **HW4:** Use datetime module: (a) print today’s date, (b) days since Jan 1 2026, (c) add 30 days to today.
-- [ ] **HW5 — 🔀 Mixed:** Given log lines, use filter() to keep only lines with “ERROR”. Explain in 3 lines how this maps to Hadoop pipeline before reduce phase.
+- [x] HW1 `[3/5]` — function correct, only tested 1 lambda instead of 3
+- [x] HW2 `[5/5]` — perfect one-liner
+- [ ] HW3 `[0/5]` — skipped, redoing in Day 3
+- [x] HW4 `[5/5]` — perfect datetime usage
+- [ ] HW5 `[0/5]` — skipped (Hadoop not learned yet, fair)
 
-**🗄️ SQL Questions (2) — SELECT, WHERE, ORDER BY, LIMIT**
+**🗄️ SQL**
 
-- [ ] **SQL1:** Table employees(id, name, department, salary). Get all in ‘Engineering’ with salary > 60000, ordered by salary DESC, top 5 only.
-- [ ] **SQL2:** Find employees whose name starts with ‘A’ OR who earn more than 90000. Use WHERE with LIKE and OR.
+- [x] SQL1 `[2/5]` — missing department filter, salary was 6000 not 60000
+- [x] SQL2 `[5/5]` — excellent, used lower() for case safety
 
 **📓 Notebook:** `notebooks/day_2/day_2.ipynb`
-**⏱️ Time Spent:** `___` mins
+**⏱️ Time Spent:** `40` mins
 
 -----
 
@@ -122,24 +108,24 @@
 
 **💡 Practice Questions (5)**
 
-- [ ] PQ1:
-- [ ] PQ2:
-- [ ] PQ3:
-- [ ] PQ4:
-- [ ] PQ5:
+- [ ] **PQ1:** Difference between open() modes ‘r’, ‘w’, ‘a’, ‘rb’. Show each in code.
+- [ ] **PQ2:** What does `with open(...) as f` do? Why better than f.close()?
+- [ ] **PQ3:** Use pathlib to create a Path, get filename without extension, get parent directory.
+- [ ] **PQ4:** Write a try/except/else/finally skeleton with comments explaining when each block runs.
+- [ ] **PQ5:** What is wrong with `except Exception:`? Fix the code and explain why.
 
 **📝 Homework (5)**
 
-- [ ] HW1:
-- [ ] HW2:
-- [ ] HW3:
-- [ ] HW4:
-- [ ] HW5:
+- [ ] **HW1:** Create ‘sample.txt’ with Python, then read it back printing each line with its line number.
+- [ ] **HW2:** Write safe_read(filepath) handling FileNotFoundError and PermissionError separately.
+- [ ] **HW3:** Redo Day 2 HW3 — collections.Counter + defaultdict (skipped yesterday).
+- [ ] **HW4:** Use pathlib to list all .ipynb files in a folder, print filenames without extension.
+- [ ] **HW5 — 🔀 Mixed:** Write read_errors_only(filepath) — reads file, uses filter() to keep only ERROR lines, handles FileNotFoundError.
 
 **🗄️ SQL Questions (2) — GROUP BY, HAVING, Aggregates**
 
-- [ ] SQL1:
-- [ ] SQL2:
+- [ ] **SQL1:** orders(order_id, customer_id, amount, city). Find cities where total order amount > 10000, ordered by total DESC.
+- [ ] **SQL2:** employees(id, name, department, salary). Find avg salary per department where avg > 50000, also show employee count.
 
 **📓 Notebook:** `notebooks/day_3/day_3.ipynb`
 **⏱️ Time Spent:** `___` mins
@@ -372,12 +358,11 @@
 - [ ] HW4:
 - [ ] HW5:
 
-**🧪 TEST — Questions will be given on Day 10**
+**🧪 TEST — Questions given on Day 10**
 
 **🎯 Test Score:** `___/10`
 **📋 Feedback:** *(paste here)*
 
-**📓 Notebook:** `notebooks/day_10/day_10.ipynb`
 **⏱️ Time Spent:** `___` mins
 
 -----
@@ -701,8 +686,6 @@
 
 ## ✅ Day 20 — 🧪 TEST DAY
 
-> **Theme:** Exploring Cluster + GCP Best Practices + Linux Commands 1 + TEST
-
 **📹 Videos**
 
 - [ ] #87 Exploring our Hadoop Cluster (24min)
@@ -725,7 +708,7 @@
 - [ ] HW4:
 - [ ] HW5:
 
-**🧪 TEST — Questions will be given on Day 20**
+**🧪 TEST — Questions given on Day 20**
 
 **🎯 Test Score:** `___/12`
 **📋 Feedback:** *(paste here)*
@@ -982,11 +965,10 @@
 ## ✅ Day 28
 
 > **Theme:** Buffer / Catch-Up / Weak Areas
-> **🐍 Python today | 🗄️ SQL revision today**
 
 - [ ] Re-watch any video you rated below 3/5
 - [ ] Redo the hardest homework problem from any previous day
-- [ ] Write your Month 1 concept summary (one paragraph each)
+- [ ] Write your Month 1 concept summary
 
 **🗄️ SQL Questions (2) — Mixed Revision**
 
@@ -997,19 +979,16 @@
 
 -----
 
-## ✅ Day 29
+## ✅ Day 29 — Month 1 Mini Project
 
-> **Theme:** Month 1 Mini Project
-> **🐍 Full Python day**
-
-- [ ] Reads a CSV file using Pandas
-- [ ] Cleans the data (drop nulls, fix types, rename columns)
-- [ ] Transforms it (filter rows, group by, aggregate)
-- [ ] Writes output to a new CSV
+- [ ] Reads a CSV using Pandas
+- [ ] Cleans data (drop nulls, fix types, rename columns)
+- [ ] Transforms (filter rows, group by, aggregate)
+- [ ] Writes output to new CSV
 - [ ] Every stage decorated with @timer and @retry(3)
-- [ ] Full logging to both console and a .log file
-- [ ] Built using a class Pipeline with proper OOP structure
-- [ ] Has a README.md
+- [ ] Full logging to console and .log file
+- [ ] Class Pipeline with proper OOP structure
+- [ ] README.md
 
 **📓 GitHub Link:** `___`
 **⏱️ Time Spent:** `___` mins
@@ -1018,7 +997,7 @@
 
 ## ✅ Day 30 — 🧪 FINAL TEST DAY
 
-**🧪 TEST — Questions will be given on Day 30**
+**🧪 TEST — Questions given on Day 30**
 
 **🎯 Test Score:** `___/12`
 **📋 Feedback:** *(paste here)*
@@ -1059,6 +1038,6 @@
 
 -----
 
-*📌 Come back every day. Bring your notebook. I review, score, and give you the next day.*
+*📌 Send your completed notebook each day. I review, score, and send you the next one.*
 *🧪 Tests on Day 10, 20, 30 — no skipping.*
-*💪 You’ve got this — Day 1 done, 29 to go!*
+*💪 Day 2 done — momentum is building. Keep going!*
