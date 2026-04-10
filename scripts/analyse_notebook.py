@@ -311,7 +311,7 @@ def call_claude(prompt: str) -> str:
 
         time.sleep(2)
 
-return '{"score": 0, "feedback": "API failed after retry"}'
+    return '{"score": 0, "feedback": "API failed after retry"}'
 
 def score_one(question: str, answer: str, qtype: str) -> dict:
     """Score a single answer."""
