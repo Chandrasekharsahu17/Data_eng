@@ -62,38 +62,161 @@ Day 28    SQL full revision (mixed questions)
 
 ---
 
-## Day 1 — ✅ DONE
-**Theme:** Functions + Lambda + Map | **Score:** Full marks | **Time:** 90 mins
-**Videos:** `#26` `#27` `#28` | PQs: ✅ All 5 | HWs: ✅ All 5
-
-> *Revision notes on file. Key: first-class functions, lambda is one expression only, `map()` is lazy, always wrap in `list()`, pipeline bug = use `data = func(data)` not `func(original)`*
+## WEEK 1
 
 ---
 
-## Day 2 — ✅ DONE
-**Theme:** Filter + Modules + Standard Library | **Score:** 37/60 | **Time:** 40 mins
-**Videos:** `#29` `#30` `#31` | SQL: ✅ SELECT/WHERE
+## Day 1 - DONE
+Theme: Function Examples + Lambda + Map | Score: Full marks | Time: 90 mins
 
-> *Revision notes on file. Key: `filter(None, lst)` removes all falsy, `os.path.join()` cross-platform, `Counter`, `defaultdict`. Missed: `filter` vs `map` preference, `os.path.join` theory, collections tasks.*
+Videos:
+- [x] #26 Python Function Examples (28min)
+- [x] #27 Lambda Functions In Python (10min)
+- [x] #28 Map Functions In Python (11min)
+
+PQs: [x] All 5 done
+HWs: [x] All 5 done
+
+### Day 1 Revision Notes
+
+- *args packs positional arguments into a tuple. **kwargs packs keyword arguments into a dict
+- The name args or kwargs does not matter. The * and ** are what matter
+- Lambda syntax: lambda args: expression. Only ONE expression allowed, no multiple lines
+- Use regular def when: multiple lines, loops, try/except, docstring needed
+- Use lambda when: short one-liner passed directly to map() sorted() filter()
+- map(func, iterable) applies function to every element and returns a map object (lazy)
+- Always wrap in list() to see results: list(map(lambda x: x**2, [1,2,3]))
+- map() with two lists: list(map(lambda x,y: x+y, a, b)) zips and applies together
+- sorted(lst, key=lambda x: x[-1]) sorts by last character of each string
+- Default argument in lambda: lambda x, y=10: x+y uses 10 if second arg not passed
+- pipeline() bug fix: use data = func(data) not data = func(original) inside loop
+- Returning multiple values returns a tuple. Unpack with: a, b = func(x)
+- A function that only prints returns None. If you try to chain it, the next step gets None
 
 ---
 
-## Day 3 — ✅ DONE (partial, fever)
-**Theme:** File IO + File Paths + Exception intro | **Score:** 23/60 | **Time:** 90 mins
-**Videos:** `#32` `#33` ✅ | `#34` ❌ carried | SQL: ✅ GROUP BY/HAVING perfect
+## Day 2 - DONE
+Theme: Filter + Modules + Standard Library | Score: 37/60 | Time: 40 mins
 
-> *Revision notes on file. Key: `with open()` as f auto-closes, `for line in f` = O(1) memory, `pathlib.Path`, `.stem`, `.parent`, `.rglob()`. Perfect SQL day.*
+Videos:
+- [x] #29 Python Filter Function (9min)
+- [x] #30 Import Modules And Packages (17min)
+- [x] #31 Standard Library Overview (18min)
+
+PQs:
+- [x] PQ1 [5/5] filter() returns filter object, wrapped in list() correctly
+- [x] PQ2 [3/5] correct concept, missed when to prefer each
+- [x] PQ3 [4/5] works, tip: filter(None, lst) removes all falsy values in one shot
+- [x] PQ4 [5/5] correct definitions and examples
+- [ ] PQ5 [0/5] not answered - os.path.join() is cross-platform safe, string concat breaks on Windows
+
+HWs:
+- [x] HW1 [3/5] function correct, only tested 1 lambda instead of 3
+- [x] HW2 [5/5] perfect one-liner
+- [ ] HW3 [0/5] skipped - collections Counter and defaultdict
+- [x] HW4 [5/5] perfect datetime usage
+- [ ] HW5 [0/5] skipped (Hadoop not learned yet)
+
+SQL:
+- [x] SQL1 [2/5] missing department filter, salary was 6000 not 60000
+- [x] SQL2 [5/5] excellent, used lower() for case-insensitive match
+
+### Day 2 Revision Notes
+
+- filter(func, iterable) keeps elements where func returns True, returns filter object (lazy)
+- filter(None, lst) removes all falsy values: 0, empty string, None, False, empty list
+- import math loads full library, access with math.sqrt(). Use when you need many functions
+- from math import sqrt imports only that function. Use when you need just one thing
+- random.choice(lst) picks one random element
+- random.shuffle(lst) shuffles list IN PLACE, returns None not a new list
+- random.randint(a, b) returns random integer inclusive of both ends
+- os.path.join() is cross-platform safe. String concatenation with / breaks on Windows
+- Counter(lst) counts frequency of each element automatically
+- defaultdict(list) creates empty list automatically for new keys, no KeyError ever
+- One-liner: list(map(lambda x: x**2, filter(lambda x: x%2==0, lst)))
+- SQL: WHERE filters rows before grouping. HAVING filters groups after grouping
+- SQL: Always read the full question before writing. Check every condition required
 
 ---
 
-## Day 4 — ✅ DONE
-**Theme:** Exception Handling + OOP + Inheritance | **Score:** 28/55 | **Time:** 150 mins
-**Videos:** `#34` `#35` `#36` | PQs: ✅ | HWs: ✅
+## Day 3 - PARTIAL (had fever)
+Theme: File Operations + File Paths + Exception Handling | Score: 23/60 | Time: 90 mins
+Note: Video #34 not watched, exception handling pending carried to Day 4
 
-> *Revision notes on file. Key: catch specific before general, `super().__init__()`, `__mro__`, `raise` stops program — `print` does not. OOP is everywhere in pipelines.*
+Videos:
+- [x] #32 File Operation In Python (17min)
+- [x] #33 Working With File Paths (9min)
+- [ ] #34 Exception Handling In Python (25min) - carried to Day 4
+
+PQs:
+- [x] PQ1 [5/5] proved all 4 file modes with working code
+- [x] PQ2 [2/5] basic idea correct, missed the file handle leak danger
+- [x] PQ3 [2/5] created Path object, missed .stem and .parent
+- [ ] PQ4 [0/5] pending - exception video not watched
+- [ ] PQ5 [0/5] pending
+
+HWs:
+- [x] HW1 [4/5] correct, tip: use enumerate() not manual counter
+- [ ] HW2 [0/5] pending
+- [ ] HW3 [0/5] pending
+- [ ] HW4 [0/5] pending
+- [ ] HW5 [0/5] pending
+
+SQL:
+- [x] SQL1 [5/5] GROUP BY + HAVING perfect
+- [x] SQL2 [5/5] AVG + COUNT + HAVING perfect - perfect SQL day
+
+### Day 3 Revision Notes
+
+- open(file, 'r') read only. open(file, 'w') write and overwrite. open(file, 'a') append. open(file, 'rb') binary
+- Always use with open() as f. It auto-closes the file even if an error crashes the program
+- Without with open: if error occurs before f.close(), the file handle stays open in memory forever
+- File handle leak in a pipeline processing 10000 files fills OS limit and crashes the entire job
+- f.read() loads entire file as one string. Bad for large files
+- f.readlines() loads ALL lines into a list in memory at once. Also bad for large files
+- for line in f reads ONE line at a time. Good for large files. Use this for 10GB log files
+- pathlib.Path is the modern way. Path("data/sales.csv").stem gives sales (no extension)
+- Path("data/sales.csv").parent gives data (parent folder)
+- Path("folder").exists() returns True or False
+- Path("folder").glob("*.csv") lists all csv files in that folder
+- Path("folder").rglob("*.csv") lists all csv files recursively in all subfolders
+- try runs code that might fail. except catches specific error. else runs only if no error. finally always runs
+- Always catch specific exceptions like FileNotFoundError not just Exception
+- Catching Exception hides real bugs because it catches everything including things you did not expect
+- SQL: GROUP BY groups rows. Aggregate functions work on those groups. HAVING filters the groups
 
 ---
 
+## Day 4 - DONE
+Theme: Exception Handling (finish Day 3) + OOP + Inheritance | Score: 28/55 | Time: 150 mins
+
+Videos:
+- [x] #34 Exception Handling In Python (25min)
+- [x] #35 OOPS In Python (23min)
+- [x] #36 Inheritance In Python (19min)
+
+PQs: [x] PQ4 [4/5] [x] PQ5 [3/5] - OOP PQ1-PQ5 not attempted
+HWs: [ ] HW1 [3/5] [ ] HW2 [5/5] [ ] HW3 [4/5] [ ] HW4 [0/5] [ ] HW5 [0/5]
+
+### Day 4 Revision Notes
+
+- try/except/else/finally: try runs first, except catches specific errors, else runs only if NO error, finally ALWAYS runs
+- Order matters: catch specific exceptions before general ones. ValueError before Exception
+- If you put Exception first it catches everything and the specific handler below never runs
+- Custom exception: class MyError(Exception): pass then raise MyError("message")
+- raise actually stops the program and throws the error. print just shows text and continues
+- BankAccount bug: condition was amount < self.balance, should be amount > self.balance
+- Class is a blueprint. Object is the real thing created from the blueprint
+- self means: the specific object calling this method right now
+- __init__ runs automatically the moment you create an object. It sets up the object
+- Class attribute is shared by ALL objects. Instance attribute belongs to ONE object
+- Inheritance: child class gets all methods and attributes of parent automatically
+- super().__init__() calls the parent class setup before adding the child's own attributes
+- MRO means Method Resolution Order. Python uses left to right depth first when multiple parents
+- D(B, C) means Python checks D first, then B, then A, then C. Print D.__mro__ to see the order
+- In Data Engineering OOP is everywhere. Every pipeline, connector, and config is a class
+
+---
 ## Day 5 — 🔄 CURRENT
 **Theme:** OOP Part 2 — Polymorphism + Encapsulation + Abstraction
 
